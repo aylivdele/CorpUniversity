@@ -8,22 +8,22 @@ export enum TaskContentType {
 }
 
 export interface TaskContent {
-    index: number;
+    id: number;
     type: TaskContentType;
     title?: string;
     text?: string | string[];
     imgSource?: string;
 }
 export interface LessonTask {
-    index: number;
+    id: number;
     title: string;
     content: TaskContent[];
     completed?: boolean;
 }
 
 export interface TestQuestion {
-    index: number;
-    questionText: string;
+    id: number;
+    text: string;
     answers: string[];
     correctAnswers: string[];
 }

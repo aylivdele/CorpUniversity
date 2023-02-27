@@ -49,7 +49,7 @@ export class UIFactory {
             <SimpleTextComponent
                 title={content.title}
                 text={(content.text as string) ?? ''}
-                key={content.index}
+                key={content.id}
                 style={this.defaultStyles}
                 screenEnterCallback={screenEnterCallback}
             />
@@ -62,7 +62,7 @@ export class UIFactory {
                 screenEnterCallback={screenEnterCallback}
                 text={(content.text as string) ?? ''}
                 title={content.title ?? 'Открой меня'}
-                key={content.index}
+                key={content.id}
                 style={this.defaultStyles}
             />
         );
@@ -73,7 +73,7 @@ export class UIFactory {
             <AlertComponent
                 type={AlertType.DANGER}
                 text={(content.text as string) ?? 'Attention'}
-                key={content.index}
+                key={content.id}
                 style={this.defaultStyles}
                 screenEnterCallback={screenEnterCallback}
             />
@@ -85,7 +85,7 @@ export class UIFactory {
             <AlertComponent
                 text={(content.text as string) ?? 'Warning'}
                 type={AlertType.WARNING}
-                key={content.index}
+                key={content.id}
                 style={this.defaultStyles}
                 screenEnterCallback={screenEnterCallback}
             />
@@ -97,7 +97,7 @@ export class UIFactory {
             <ImageComponent
                 title={content.title}
                 imgSource={content.imgSource ?? imagePlaceholder}
-                key={content.index}
+                key={content.id}
                 style={this.defaultStyles}
                 screenEnterCallback={screenEnterCallback}
             />

@@ -26,7 +26,7 @@ export const TestQuestionComponent = (props: TestQuestionComponentProps) => {
     return (
         <Form style={style}>
             <Form.Group>
-                <Form.Label>{question.questionText}</Form.Label>
+                <Form.Label>{question.text}</Form.Label>
                 {question.answers.map(answer => (
                     <Form.Check
                         key={answer}

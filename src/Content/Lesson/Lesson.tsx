@@ -15,7 +15,7 @@ function initCompletionMap(lessonTasks: LessonTask[]) {
     const map: CompletionMap = new Map();
     lessonTasks.forEach(task => {
         map.set(
-            task.index,
+            task.id,
             task.content.map(() => false)
         );
     });
@@ -24,7 +24,7 @@ function initCompletionMap(lessonTasks: LessonTask[]) {
 
 function initSubmittedAnswers(questions?: TestQuestion[]) {
     const map: SubmittedAnswers = new Map();
-    questions?.forEach(question => map.set(question.index, []));
+    questions?.forEach(question => map.set(question.id, []));
     return map;
 }
 
@@ -87,7 +87,7 @@ function Lesson(props: LessonProps) {
         const questionsWithMistakes: number[] = [];
 
         lessonTest?.questions.forEach(question => {
-            const submitted = submittedAnswers.get(question.index)!;
+            const submitted = submittedAnswers.get(question.id)!;
             if (
                 submitted.length !== question.correctAnswers.length ||
                 question.correctAnswers.reduce(
@@ -95,7 +95,7 @@ function Lesson(props: LessonProps) {
                     false
                 )
             ) {
-                questionsWithMistakes.push(question.index);
+                questionsWithMistakes.push(question.id);
             }
         });
 
@@ -115,14 +115,14 @@ function Lesson(props: LessonProps) {
                     <Col sm={6} style={{ backgroundColor: 'whitesmoke', borderRadius: '5px', padding: '20px' }}>
                         <Tab.Content>
                             {lessonTasks.map(task => (
-                                <Tab.Pane key={task.index} eventKey={task.index}>
+                                <Tab.Pane key={task.id} eventKey={task.id}>
                                     {UIFactory.renderTitle(task.title)}
                                     {task.content.map(content =>
                                         UIFactory.renderContent(content, () =>
-                                            updateCompletionMap(task.index, content.index)
+                                            updateCompletionMap(task.id, content.id)
                                         )
                                     )}
-                                    {(task.index + 1 < lessonTasks.length ||
+                                    {(task.id + 1 < lessonTasks.length ||
                                         (!!lessonTest && getIsTestAvailable(completionMap))) && (
                                         <div className="d-flex justify-content-end">
                                             <Button onClick={onNext}>{'Далее >'}</Button>
@@ -137,8 +137,8 @@ function Lesson(props: LessonProps) {
                                         UIFactory.renderQuestion(
                                             question,
                                             (variant, value, isRadio) =>
-                                                onAnswerChange(question.index, variant, value, isRadio),
-                                            mistakes.includes(question.index)
+                                                onAnswerChange(question.id, variant, value, isRadio),
+                                            mistakes.includes(question.id)
                                         )
                                     )}
                                     <div className="d-flex justify-content-end">
@@ -151,19 +151,19 @@ function Lesson(props: LessonProps) {
                     <Col sm={3}>
                         <ListGroup>
                             {lessonTasks.map(task => {
-                                const completedArray = completionMap.get(task.index)!;
+                                const completedArray = completionMap.get(task.id)!;
                                 const count = completedArray?.reduce((pv, cv) => pv + +cv, 0);
                                 return (
                                     <ListGroup.Item
-                                        key={task.index}
+                                        key={task.id}
                                         variant={
-                                            completionMap.get(task.index)?.reduce((pv, cv) => pv && cv)
+                                            completionMap.get(task.id)?.reduce((pv, cv) => pv && cv)
                                                 ? 'success'
                                                 : 'light'
                                         }
                                         action
-                                        onClick={() => setCurrentTask(task.index)}
-                                        active={task.index === currentTask}
+                                        onClick={() => setCurrentTask(task.id)}
+                                        active={task.id === currentTask}
                                     >
                                         {task.title}
                                         <ProgressBar variant="warning" now={(count / completedArray.length) * 100} />
